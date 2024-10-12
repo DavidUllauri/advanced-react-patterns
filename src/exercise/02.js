@@ -15,27 +15,26 @@ function Toggle({children}) {
   // 📜 https://react.dev/reference/react/Children
   // 📜 https://react.dev/reference/react/cloneElement
   return React.Children.map(children, (child) => {
-    return React.cloneElement(child, {on, toggle})
+    if (typeof child.type === 'string') {
+      return child
+    } else {
+      return React.cloneElement(child, {on, toggle})
+    }
   },)
 }
 
-// 🐨 Flesh out each of these components
-
-// Accepts `on` and `children` props and returns `children` if `on` is true
 const ToggleOn = ({on, children}) => {
   if (on) {
     return children
   }
 }
 
-// Accepts `on` and `children` props and returns `children` if `on` is false
 const ToggleOff = ({on, children}) => {
   if (!on) {
     return children
   }
 }
 
-// Accepts `on` and `toggle` props and returns the <Switch /> with those props.
 const ToggleButton = ({on, toggle, ...props}) => {
   return <Switch on={on} onClick={toggle} {...props} />
 }
@@ -46,6 +45,7 @@ function App() {
       <Toggle>
         <ToggleOn>The button is on</ToggleOn>
         <ToggleOff>The button is off</ToggleOff>
+        <span>Hello</span>
         <ToggleButton />
       </Toggle>
     </div>
